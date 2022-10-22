@@ -42,6 +42,36 @@ namespace WebApiDemo.Controllers
             }
         }
 
+        [HttpGet("{id}/Orders")]
+        public IActionResult GetCustomerOrders(string id)
+        {
+            try
+            {
+                var Orders = customerDal.GetCustomerOrders(id);
+                return Ok(Orders);
+            }
+            catch (Exception ex)
+            {
+                return(BadRequest(ex.Message));
+            }
+
+        }
+
+        [HttpGet("Customers/Alphabetic/{isAlphabetic}")]
+        public IActionResult GetCustomerAlphabetic(bool isAlphabetic)
+        {
+            try
+            {
+                var Customers = customerDal.GetList().OrderBy(c => c.CompanyName);
+                return Ok(Customers);
+            }
+            catch (Exception ex)
+            {
+                return (BadRequest(ex.Message));
+            }
+
+        }
+
         // POST api/<CustomerController>
         [HttpPost]
         public IActionResult Post([FromBody] Customer customer)
